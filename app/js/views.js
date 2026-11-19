@@ -1,6 +1,6 @@
 // Leonida Trophy Codex — views.js renders every page: checklist, detail pane,
 // roadmap, missables, Next up planner, sources, and the header progress bar.
-import { GRADE_LETTERS, GRADE_LABELS, KIND_LABELS, ROADMAP_STAGES } from './config.js';
+import { GRADE_LETTERS, GRADE_LABELS, KIND_LABELS, ROADMAP_STAGES, stageForTrophy } from './config.js';
 import { trophyById, sourceList, sourceUrl } from './data.js';
 import { isEarned, counterValue, noteText } from './store.js';
 import { spoilerMask, maskedName, maskedDescription } from './filters.js';
@@ -16,6 +16,14 @@ function medalLetter(trophy) {
 function kindPill(trophy) {
   if (trophy.kind === 'platinum') return '';
   return `<span class="pill">${esc(KIND_LABELS[trophy.kind] || trophy.kind)}</span>`;
+}
+
+// stagePill — the roadmap stage chip for a checklist row ("S1 · Opening").
+// Omitted when the trophy belongs to no stage (all 55 are staged today).
+function stagePill(trophy) {
+  const stage = stageForTrophy(trophy.id);
+  if (!stage) return '';
+  return `<span class="pill stage">S${stage.num} · ${esc(stage.short)}</span>`;
 }
 
 // renderGradeCounters — header chips: 0/1 platinum, 0/2 gold, 0/6 silver, 0/46 bronze.
@@ -67,7 +75,7 @@ export function renderChecklist(listEl, rows, state, handlers) {
       `<span class="medal ${esc(t.grade)}" aria-hidden="true">${esc(medalLetter(t))}</span>` +
       `<span><span class="trophy-name">${masked ? esc(maskedName(t)) : esc(t.name)}${t.hidden && !masked ? '<span class="hidden-badge">Hidden</span>' : ''}</span>` +
       `<span class="trophy-desc" style="display:block">${masked ? esc(maskedDescription(t)) : esc(t.description)}</span>` +
-      `<span class="trophy-meta">${kindPill(t)}` +
+      `<span class="trophy-meta">${kindPill(t)}${stagePill(t)}` +
       (t.count != null ? `<span class="pill count">${count}/${t.count}</span>` : '') +
       (t.missable ? `<span class="pill missable">Missable</span>` : '') +
       (t.watch ? `<span class="pill missable">Watch</span>` : '') +
@@ -112,9 +120,14 @@ export function renderDetailPane(paneEl, trophy, state, handlers) {
   const earned = isEarned(state.save, trophy.id);
   const count = counterValue(state.save, trophy);
   const derivedOnly = trophy.guide.includes('derived from the official description only');
+  // Dated guides: the PowerPyx and GTABase community guides were published
+  // 18 Nov 2026. The official lists (Exophase / PSNProfiles / PlayStation)
+  // are not dated guides, so they carry no date.
+  const DATED_GUIDES = ['PowerPyx', 'GTABase'];
   const sourcesHtml = trophy.sources.map((name) => {
     const url = sourceUrl(name);
-    return url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)}</a>` : esc(name);
+    const dated = DATED_GUIDES.some((g) => name.startsWith(g)) ? ' (18 Nov 2026)' : '';
+    return url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)}</a>${dated}` : esc(name) + dated;
   }).join(' · ');
   paneEl.innerHTML =
     `<h2>${esc(trophy.name)}</h2>` +

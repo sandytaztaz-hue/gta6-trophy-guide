@@ -86,6 +86,17 @@ kbd {
   padding: 6px 14px;
   font-size: 13px;
 }
+/* Audit strip: the verification line under the header — one line on desktop. */
+.audit-strip {
+  margin: 0;
+  padding: 7px 22px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--paper-muted);
+  background: var(--paper-surface);
+  border-bottom: 1px solid var(--paper-line);
+}
+.audit-strip strong { color: var(--gold); }
 .tabs {
   display: flex;
   gap: 4px;
@@ -204,6 +215,7 @@ main { padding: 16px 22px 24px; max-width: 1360px; margin: 0 auto; }
 }
 .trophy-meta .pill.missable { border-color: var(--danger); color: var(--danger); font-weight: 700; }
 .trophy-meta .pill.count { border-color: var(--teal); color: var(--teal); font-weight: 700; }
+.trophy-meta .pill.stage { border-color: var(--gold); color: var(--gold); font-weight: 700; }
 .trophy-side { text-align: right; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
 .grade-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--paper-muted); }
 .earned-toggle {

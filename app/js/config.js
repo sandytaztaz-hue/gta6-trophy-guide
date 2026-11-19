@@ -21,16 +21,23 @@ export const KIND_LABELS = {
 
 // Roadmap stages, in the order a player should work them. Each stage lists trophy ids.
 export const ROADMAP_STAGES = [
-  { title: 'Stage 1 — Opening, Chapter 1', note: 'Play the opening and finish Chapter 1. Meditate with Lucia now — it may not come back.', ids: [2, 3, 28] },
-  { title: 'Stage 2 — Story, Chapters 2–4', note: 'Named story missions and chapter completions. Do the optional Chapter 4 mission before the chapter ends.', ids: [4, 5, 6, 8, 9, 10, 11, 12, 13] },
-  { title: 'Stage 3 — Finale', note: 'Finish the final mission after Chapter 4.', ids: [7] },
-  { title: 'Stage 4 — Strangers & partners', note: 'Start each stranger chain as soon as its marker appears; the partner finals carry a watch note.', ids: [22, 23, 24, 26, 27, 25, 29] },
-  { title: 'Stage 5 — Activities & challenges', note: 'Shooting Range golds, stunts, races, arcade, fishing, challenges, bowling.', ids: [15, 16, 17, 18, 19, 20, 21, 32, 46, 51] },
-  { title: 'Stage 6 — Collectibles & economy', note: 'Cards, WAiNK spots, vehicles, exploring Leonida, laundering, shops, garages.', ids: [30, 31, 35, 42, 52, 53, 54, 55] },
-  { title: 'Stage 7 — Combat & wanted', note: 'Wanted-level escapes, robberies, Combat Focus, tanks, jets, gang operations.', ids: [33, 34, 36, 37, 38, 39, 40, 41, 43, 48] },
-  { title: 'Stage 8 — Secrets & the long tail', note: 'The five trophies with no confirmed trigger at launch — description-derived guides only.', ids: [44, 45, 47, 49, 50] },
-  { title: 'Stage 9 — Platinum', note: '100% completion, then the Platinum itself.', ids: [14, 1] },
+  { title: 'Stage 1 — Opening, Chapter 1', short: 'Opening', note: 'Play the opening and finish Chapter 1. Meditate with Lucia now — it may not come back.', ids: [2, 3, 28] },
+  { title: 'Stage 2 — Story, Chapters 2–4', short: 'Story', note: 'Named story missions and chapter completions. Do the optional Chapter 4 mission before the chapter ends.', ids: [4, 5, 6, 8, 9, 10, 11, 12, 13] },
+  { title: 'Stage 3 — Finale', short: 'Finale', note: 'Finish the final mission after Chapter 4.', ids: [7] },
+  { title: 'Stage 4 — Strangers & partners', short: 'Strangers', note: 'Start each stranger chain as soon as its marker appears; the partner finals carry a watch note.', ids: [22, 23, 24, 26, 27, 25, 29] },
+  { title: 'Stage 5 — Activities & challenges', short: 'Activities', note: 'Shooting Range golds, stunts, races, arcade, fishing, challenges, bowling.', ids: [15, 16, 17, 18, 19, 20, 21, 32, 46, 51] },
+  { title: 'Stage 6 — Collectibles & economy', short: 'Collectibles', note: 'Cards, WAiNK spots, vehicles, exploring Leonida, laundering, shops, garages.', ids: [30, 31, 35, 42, 52, 53, 54, 55] },
+  { title: 'Stage 7 — Combat & wanted', short: 'Combat', note: 'Wanted-level escapes, robberies, Combat Focus, tanks, jets, gang operations.', ids: [33, 34, 36, 37, 38, 39, 40, 41, 43, 48] },
+  { title: 'Stage 8 — Secrets & the long tail', short: 'Secrets', note: 'The five trophies with no confirmed trigger at launch — description-derived guides only.', ids: [44, 45, 47, 49, 50] },
+  { title: 'Stage 9 — Platinum', short: 'Platinum', note: '100% completion, then the Platinum itself.', ids: [14, 1] },
 ];
+
+// stageForTrophy — the roadmap stage a trophy belongs to, for the checklist
+// stage chip. Returns { num, title, short } or null if it is in no stage.
+export function stageForTrophy(id) {
+  const i = ROADMAP_STAGES.findIndex((s) => s.ids.includes(id));
+  return i === -1 ? null : { num: i + 1, title: ROADMAP_STAGES[i].title, short: ROADMAP_STAGES[i].short };
+}
 
 // Demo save used by the ?shot= screenshots: 13 of 55 earned, counters part-way.
 export const DEMO_SAVE = {
