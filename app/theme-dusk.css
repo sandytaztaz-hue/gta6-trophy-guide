@@ -1,0 +1,36 @@
+/* Leonida Trophy Atlas — Vice Dusk (dark) theme. Overrides the Paper base in style.css. */
+body[data-theme="dusk"] {
+  --paper-bg: #14101f;
+  --paper-surface: #1d1730;
+  --paper-ink: #f2ecdf;
+  --paper-muted: #b3a9c9;
+  --paper-line: #3a3157;
+  --gold: #f2a541;
+  --gold-soft: #f2a541;
+  --teal: #2ec4b6;
+  --danger: #ff8a7a;
+  background: var(--paper-bg);
+  color: var(--paper-ink);
+}
+body[data-theme="dusk"] .masthead {
+  background: linear-gradient(180deg, #1d1730 0%, #171226 100%);
+  border-bottom-color: var(--gold);
+}
+body[data-theme="dusk"] .brand h1::after { color: var(--gold); }
+body[data-theme="dusk"] .progress-bar { background: #2c2447; }
+body[data-theme="dusk"] .grade-chip.platinum { border-color: #38bdf8; background: #0c2d4d; color: #bae6fd; }
+body[data-theme="dusk"] .grade-chip.gold { border-color: #f2a541; background: #3a2a10; color: #fde68a; }
+body[data-theme="dusk"] .grade-chip.silver { border-color: #64748b; background: #26313f; color: #e2e8f0; }
+body[data-theme="dusk"] .grade-chip.bronze { border-color: #d08a4e; background: #3a2317; color: #fed7aa; }
+body[data-theme="dusk"] .tab.active { color: var(--gold); }
+body[data-theme="dusk"] .trophy-row.earned { background: #2a2140; }
+body[data-theme="dusk"] .medal.platinum { color: #7dd3fc; border-color: #38bdf8; background: radial-gradient(circle at 35% 30%, #164e63, #0c2d4d); }
+body[data-theme="dusk"] .medal.gold { color: #fde68a; border-color: #f2a541; background: radial-gradient(circle at 35% 30%, #78350f, #451a03); }
+body[data-theme="dusk"] .medal.silver { color: #e2e8f0; border-color: #94a3b8; background: radial-gradient(circle at 35% 30%, #475569, #1e293b); }
+body[data-theme="dusk"] .medal.bronze { color: #fed7aa; border-color: #d08a4e; background: radial-gradient(circle at 35% 30%, #7c2d12, #431407); }
+body[data-theme="dusk"] .earned-toggle[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #14101f; }
+body[data-theme="dusk"] .stage li.earned { color: var(--teal); }
+body[data-theme="dusk"] kbd { background: #2c2447; border-color: var(--paper-line); }
+body[data-theme="dusk"] .detail-pane h3 { color: var(--gold); }
+body[data-theme="dusk"] .reveal-btn { border-color: var(--danger); color: var(--danger); }
+body[data-theme="dusk"] .nextup-strip b { color: var(--gold); }
