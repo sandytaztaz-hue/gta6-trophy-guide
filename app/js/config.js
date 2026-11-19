@@ -1,5 +1,5 @@
-// Leonida Trophy Atlas — config.js names the parts: labels, roadmap stages, demo save.
-export const APP_NAME = 'Leonida Trophy Atlas';
+// Leonida Trophy Codex — config.js names the parts: labels, roadmap stages, demo save.
+export const APP_NAME = 'Leonida Trophy Codex';
 export const TOTAL_TROPHIES = 55;
 export const SAVE_KEY = 'leonida-trophy-atlas-v1';
 export const SPOILER_DEFAULT = true;

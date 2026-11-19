@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — main.js boots the app: routing, filters, shortcuts,
+// Leonida Trophy Codex — main.js boots the app: routing, filters, shortcuts,
 // theme switch, export/import, and the ?shot= states the screenshots use.
 import { SPOILER_DEFAULT, DEMO_SAVE } from './config.js';
 import { loadTrophies, trophyList, trophyById } from './data.js';
@@ -141,7 +141,7 @@ function bindControls() {
       state.save = importProgressText(await file.text());
       renderAll();
     } catch {
-      alert('That file is not Atlas progress JSON.');
+      alert('That file is not Codex progress JSON.');
     }
     e.target.value = '';
   });

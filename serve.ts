@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — tiny static server for app/ (Node 22, stdlib only).
+// Leonida Trophy Codex — tiny static server for app/ (Node 22, stdlib only).
 // `node serve.ts` serves app/ on http://localhost:8080 (`--port <n>` for another
 // port). It sends the MIME types a browser needs, refuses any path outside app/,
 // and does nothing clever: a development convenience, not a public web server.
@@ -64,5 +64,5 @@ createServer((req, res) => {
   });
   createReadStream(file).pipe(res);
 }).listen(port, '127.0.0.1', () => {
-  console.log(`Leonida Trophy Atlas is on http://localhost:${port}`);
+  console.log(`Leonida Trophy Codex is on http://localhost:${port}`);
 });

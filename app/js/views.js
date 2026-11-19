@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — views.js renders every page: checklist, detail pane,
+// Leonida Trophy Codex — views.js renders every page: checklist, detail pane,
 // roadmap, missables, Next up planner, sources, and the header progress bar.
 import { GRADE_LETTERS, GRADE_LABELS, KIND_LABELS, ROADMAP_STAGES } from './config.js';
 import { trophyById, sourceList, sourceUrl } from './data.js';
