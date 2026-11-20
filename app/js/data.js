@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — data.js loads the trophy list and answers lookups.
+// Leonida Trophy Codex — data.js loads the trophy list and answers lookups.
 let doc = null;
 
 export async function loadTrophies() {

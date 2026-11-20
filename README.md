@@ -1,4 +1,4 @@
-# Leonida Trophy Atlas — GTA 6 trophy guide
+# Leonida Trophy Codex — GTA 6 trophy guide
 
 [![make.fun](https://make.fun/badge/gta6-trophy-guide-01.svg)](https://make.fun/c/gta6-trophy-guide-01)
 [![rank](https://make.fun/badge/gta6-trophy-guide-01/sandytaztaz-hue/gta6-trophy-guide/rank.svg)](https://make.fun/c/gta6-trophy-guide-01)
@@ -9,7 +9,7 @@ An offline guide and tracker for all **55 PlayStation 5 trophies of GTA VI** —
 ## What it does
 
 - **Checklist** — every trophy by its exact official name and description, with grade, kind, hidden badge, earned toggle, and a PSN progress counter where one exists (20 trophies carry a counter, from 250 stunts to $250,000 laundered).
-- **Full guide per trophy** — steps, where and how, when it can be missed, in the Atlas's own words, with a **Sources line naming and linking each source** (PowerPyx, GTABase, Exophase, PSNProfiles, egamers.io). Where no community source had confirmed steps at launch, the guide says so plainly instead of inventing them.
+- **Full guide per trophy** — steps, where and how, when it can be missed, in the Codex's own words, with a **Sources line naming and linking each source** (PowerPyx, GTABase, Exophase, PSNProfiles, egamers.io). Where no community source had confirmed steps at launch, the guide says so plainly instead of inventing them.
 - **Spoiler guard (on by default)** — the 28 hidden trophies stay masked until earned; reveal one at a time from its detail pane.
 - **Roadmap to platinum** — nine stages in play order, each with per-stage progress, built from the official descriptions.
 - **Missables page** — the one confirmed possibly-missable trophy (Positive Mental Attitude, Chapter 1), the optional Chapter 4 mission behind Maximum Withdrawal, and the five stranger chains to start early — plus the **Next up planner** (missables first, then nearest-to-complete, then story order).

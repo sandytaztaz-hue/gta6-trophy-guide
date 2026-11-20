@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — scripts/shots.mjs takes the 4 screenshots in shots.json.
+// Leonida Trophy Codex — scripts/shots.mjs takes the 4 screenshots in shots.json.
 // It serves app/ on a local port, drives headless Chrome over CDP, waits for
 // window.__shotReady on each ?shot= view, and saves JPEG q85 renders into
 // screenshots/. Run: node scripts/shots.mjs  (Node 22; no dependencies).

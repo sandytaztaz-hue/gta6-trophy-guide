@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — hand-in program (Node 22, standard library only).
+// Leonida Trophy Codex — hand-in program (Node 22, standard library only).
 // The guide itself is the static app/ folder: index.html plus ES modules, CSS and
 // the trophy data, all offline. This program copies app/ and screenshots/ from
 // beside this file into the hand-in folder and writes dossier.json there with the

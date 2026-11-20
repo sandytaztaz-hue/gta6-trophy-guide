@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — filters.js: kind/grade/search/earned/hidden rules + spoilerMask.
+// Leonida Trophy Codex — filters.js: kind/grade/search/earned/hidden rules + spoilerMask.
 import { isEarned } from './store.js';
 
 // A hidden trophy stays masked while the spoiler guard is on and it is not earned.

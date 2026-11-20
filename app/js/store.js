@@ -1,4 +1,4 @@
-// Leonida Trophy Atlas — store.js keeps progress in the browser: earned ticks,
+// Leonida Trophy Codex — store.js keeps progress in the browser: earned ticks,
 // PSN progress counters, per-trophy notes, export/import, copy-to-clipboard.
 import { SAVE_KEY, DEMO_SAVE } from './config.js';
 
@@ -81,7 +81,7 @@ export function exportProgress(save) {
 }
 
 export async function copyProgressToClipboard(save) {
-  const lines = [`Leonida Trophy Atlas — ${save.earned.length}/55 earned`];
+  const lines = [`Leonida Trophy Codex — ${save.earned.length}/55 earned`];
   for (const id of [...save.earned].sort((a, b) => a - b)) lines.push(`earned #${id}`);
   const text = lines.join('\n');
   if (navigator.clipboard && navigator.clipboard.writeText) {
