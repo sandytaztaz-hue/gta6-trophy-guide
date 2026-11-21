@@ -386,15 +386,16 @@ export function nextUpPanel(trophies, save, state) {
 }
 
 // SOURCES FOR THIS GUIDE — one line per source, with the claim count the
-// citations actually support.
+// citations actually support. Two columns and compact, so the whole panel
+// fits above NEXT UP inside the 800px cover shot.
 export function sourcesPanel(trophies) {
   const rows = sourceClaimCounts(trophies).map((s) => {
     const label = s.url
-      ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">[${s.num}] ${esc(s.short)}</a>`
-      : `[${s.num}] ${esc(s.short)}`;
-    return `<li>${label} — <strong>${s.claims} claims</strong></li>`;
+      ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.short)}</a>`
+      : esc(s.short);
+    return `<li>${label} — <strong>${s.claims}</strong></li>`;
   }).join('');
-  return `<section class="rail-panel"><h3>SOURCES FOR THIS GUIDE</h3><ul class="src-list">${rows}</ul></section>`;
+  return `<section class="rail-panel"><h3>SOURCES FOR THIS GUIDE</h3><p class="src-note">Claims cited per source</p><ul class="src-list">${rows}</ul></section>`;
 }
 
 // MISSABLE WATCH — the possibly-missable one, the confirmed missable, and the
@@ -413,15 +414,16 @@ export function missableWatchPanel(trophies, save, state) {
     max ? row(max, 'MISSABLE', 'last chance Ch 4 — optional mission') : '',
     ...watch.map((t) => row(t, 'AT RISK', 'last chance — start the chain early')),
   ].join('');
-  return `<section class="rail-panel"><h3>MISSABLE WATCH · 1 POSSIBLY MISSABLE · 5 AT RISK</h3><ul class="watch-list">${items}</ul></section>`;
+  return `<section class="rail-panel"><h3>MISSABLE WATCH · 2 MISSABLE · 5 AT RISK</h3><ul class="watch-list">${items}</ul></section>`;
 }
 
-// The side rail on the checklist view: NEXT UP, SOURCES, MISSABLE WATCH.
+// The side rail on the checklist view: SOURCES first so the per-source
+// counts are visible in the cover shot, then NEXT UP, then MISSABLE WATCH.
 export function renderSideRail(el, trophies, state) {
   if (!el) return;
   el.innerHTML =
-    nextUpPanel(trophies, state.save, state) +
     sourcesPanel(trophies) +
+    nextUpPanel(trophies, state.save, state) +
     missableWatchPanel(trophies, state.save, state);
 }
 
@@ -460,7 +462,7 @@ export function renderMissables(el, trophies, state) {
   const queue = planNextUp(trophies, state.save);
   const planItems = queue.slice(0, 12).map((q) => queueItemHtml(q, state, true)).join('');
   el.innerHTML =
-    `<div class="sources-page"><h2>Missables &amp; Next up</h2><p>PowerPyx and GTABase agree there is only one possibly missable trophy. This page lists it, the Chapter 4 optional mission that cannot be replayed, and the stranger chains to start early — then the planner queue.</p></div>` +
+    `<div class="sources-page"><h2>Missables &amp; Next up</h2><p>PowerPyx and GTABase agree there are two missable trophies: Positive Mental Attitude is the possibly missable one, and Maximum Withdrawal is confirmed missable — its Chapter 4 optional mission cannot be replayed. This page lists both, and the stranger chains to start early — then the planner queue.</p></div>` +
     group('Confirmed missable', 'PowerPyx and GTABase both flag this one. Do it when the guide says, or it may be gone.', confirmed) +
     group('Start early — possible story windows', 'TechWiser reports stranger chains have windows tied to story progress. PowerPyx and GTABase do not confirm it, so this is a watch list, not a confirmed missable list.', watch) +
     `<section class="planner"><h2>Next up planner</h2><p class="stage-progress">Missables first, then the trophies nearest to complete, then story order.</p><ol>${planItems}</ol></section>`;
