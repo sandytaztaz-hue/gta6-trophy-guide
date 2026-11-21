@@ -45,6 +45,16 @@ const CITE_KEYS = [
   ['Official trophy description', 8],
   ['Exophase', 9],
   ['PSNProfiles', 10],
+  ['GameMapa', 11],
+  ['Push Square', 12],
+  ['Insider Gaming', 13],
+  ['Mobalytics', 14],
+  ['TechNerdiness', 15],
+  ['GTAScoop', 16],
+  ['GamesFuze', 17],
+  ['GTADB', 18],
+  ['Beebom', 19],
+  ['Destructoid', 20],
 ];
 
 function citeNumbers(trophy) {
@@ -81,18 +91,51 @@ const DISPUTES = [
     a: '18 for the trophy: GTABase [3], KeenGamer [2] and GTA-Zone [6] list 18 spots in 10 locations, and the PSN counter runs to 18.',
     b: '15 is enough: the 100% checklist needs only 15 of 18 [2] — three misses are allowed, so a missed balcony spot cannot block 100%.',
     call: 'Do all 18. The trophy is the stricter goal; the checklist is not.',
+    pma: true,
   },
   {
     title: 'Positive Mental Attitude — is the Chapter 1 balcony required?',
     a: 'Possibly not: the balcony session adds +1 to the counter but is not a marked spot [1] [3], so it may not be required.',
     b: 'Yes — treat it as required: OutputLag [5] confirms it counts toward the total and disappears after Chapter 1, and KeenGamer [2] calls it the only missable meditation.',
     call: 'Do it in Chapter 1 anyway. Same cost either way; skipping it risks the Platinum.',
+    pma: true,
   },
   {
     title: 'Stranger chains — do they have story windows?',
     a: 'Yes, possibly: TechWiser reports stranger chains have windows tied to story progress.',
     b: 'Unconfirmed: PowerPyx [1] and GTABase [3] do not confirm windows — the chains may stay open after the story.',
     call: 'Start each chain as soon as its marker appears. It costs nothing to start early.',
+  },
+  {
+    title: 'Maximum Withdrawal — missable or not?',
+    a: 'Missable: an earlier version of this guide flagged it missable, as an optional Chapter 4 mission with no replay.',
+    b: 'Not missable: eGamers [4], Mobalytics [14] and GTAScoop [16] all call Positive Mental Attitude the ONLY possibly missable trophy, and GameMapa [11] notes vault robberies come naturally on the road to 100%, since the checklist asks for 8 vaults, more than the trophy\u2019s 5.',
+    call: 'Not missable. Rob vaults whenever; the checklist asks for more than five.',
+  },
+  {
+    title: 'How long to Platinum — 200 hours or 300?',
+    a: 'About 200 hours: PowerPyx [1] and KeenGamer [2] both put the set at 4/10 and roughly 200 hours.',
+    b: 'Up to 300 hours or more: Push Square [12] warns the Platinum can run that long.',
+    call: 'Budget 200–300 hours. The story is 60–80 of it; the checklist is the long tail.',
+  },
+  {
+    title: 'Positive Mental Attitude — must both characters meditate at every spot?',
+    a: 'Yes: PowerPyx [1] and KeenGamer [2] say spots count once for Jason and once for Lucia, so bring your partner.',
+    b: 'Maybe not: the 100% checklist needs only 15 of 18 [2], so a single pass might seem enough.',
+    call: 'Meditate with both characters at every spot. The trophy counts 18 and the PSN counter runs to 18.',
+    pma: true,
+  },
+  {
+    title: 'Hidden trophies — secret, or public?',
+    a: 'Hidden: the official list [8] and Exophase [9] mark 28 trophies hidden on PlayStation until earned.',
+    b: 'Public: PSNProfiles [10], GameMapa [11] and every list publish all 55 names anyway — hidden is a PSN display rule, not a secret.',
+    call: 'The names are public. This guide still hides them behind the spoiler guard until earned.',
+  },
+  {
+    title: 'The five unconfirmed trophies — guess, or wait?',
+    a: 'Guess from the description: GameMapa [11] and KeenGamer [2] agree the five are unsolved, but the official descriptions still hint the method — a cocktail on Ocean Beach, a showroom smash, a second-try success.',
+    b: 'Wait for a confirmed trigger: PowerPyx [1] lists no confirmed trigger at launch for In The Beginning…, Capital Offense, Bad Luck I Guess, The Truth Is Out There and Ten Pin.',
+    call: 'Follow the official description; do not trust unverified methods.',
   },
 ];
 
@@ -115,7 +158,7 @@ export function auditStats(trophies) {
     claims,
     backed,
     disputes: DISPUTES.length,
-    pages: sourceList().length + 1, // + KeenGamer's companion meditation-spot page
+    pages: sourceList().reduce((n, s) => n + (s.pages || 1), 0),
     sites: sourceList().length,
     missable: trophies.filter((t) => t.missable).length,
     atRisk: trophies.filter((t) => t.watch).length,
@@ -247,7 +290,7 @@ export function renderChecklist(listEl, rows, state, handlers) {
   }
 }
 
-// The SOURCES DIFFER box: the two Positive Mental Attitude disputes, A vs B,
+// The SOURCES DIFFER box: every Positive Mental Attitude dispute, A vs B,
 // each with the Codex's call. Only rendered for trophy 28.
 function sourcesDifferBox() {
   const side = (label, text) => `<p><strong>${label}</strong> ${esc(text)}</p>`;
@@ -257,7 +300,7 @@ function sourcesDifferBox() {
     `<p class="our-call"><strong>Our call:</strong> ${esc(d.call)}</p></div>`;
   return `<section class="sources-differ" aria-label="Sources differ on this trophy">` +
     `<h3>⚠ SOURCES DIFFER — both versions shown</h3>` +
-    one(DISPUTES[0]) + one(DISPUTES[1]) +
+    DISPUTES.filter((d) => d.pma).map(one).join('') +
     `</section>`;
 }
 
@@ -310,6 +353,7 @@ export function renderDetailPane(paneEl, trophy, state, handlers) {
     yourCount +
     (trophy.id === 28 ? sourcesDifferBox() : '') +
     `<h3>Guide</h3><p class="guide-text">${esc(trophy.guide)}${citeMarks(trophy)}</p>` +
+    `<h3 class="steps-head">HOW TO EARN IT — <span>${trophy.steps.length} steps in our own words, each with its sources</span></h3>` +
     `<ol class="guide-steps">${trophy.steps.map((s) => `<li>${esc(s)}${citeMarks(trophy)}</li>`).join('')}</ol>` +
     `<h3>Sources</h3><p class="sources-line">${sourcesHtml}</p>` +
     (derivedOnly ? `<p class="honesty-line">Guide derived from the official description only — no community source had confirmed steps at launch.</p>` : '') +
@@ -398,11 +442,11 @@ export function sourcesPanel(trophies) {
   return `<section class="rail-panel"><h3>SOURCES FOR THIS GUIDE</h3><p class="src-note">Claims cited per source</p><ul class="src-list">${rows}</ul></section>`;
 }
 
-// MISSABLE WATCH — the possibly-missable one, the confirmed missable, and the
-// five stranger finals on watch, with their last chances.
+// MISSABLE WATCH — the possibly-missable trophies and the stranger finals
+// on watch, with their last chances. Built from the data, so a corrected
+// flag (Maximum Withdrawal is NOT missable) drops out of the panel itself.
 export function missableWatchPanel(trophies, save, state) {
-  const pma = trophies.find((t) => t.id === 28);
-  const max = trophies.find((t) => t.id === 40);
+  const missables = trophies.filter((t) => t.missable);
   const watch = trophies.filter((t) => t.watch);
   const row = (t, badge, note) => {
     const label = t.name;
@@ -410,11 +454,10 @@ export function missableWatchPanel(trophies, save, state) {
     return `<li><strong>${esc(label)}</strong>${badgeHtml(badge)}<span class="queue-reason"> — ${esc(note)}${done}</span></li>`;
   };
   const items = [
-    pma ? row(pma, 'MISSABLE', 'last chance Ch 1 — balcony meditation') : '',
-    max ? row(max, 'MISSABLE', 'last chance Ch 4 — optional mission') : '',
+    ...missables.map((t) => row(t, 'MISSABLE', 'last chance Ch 1 — balcony meditation')),
     ...watch.map((t) => row(t, 'AT RISK', 'last chance — start the chain early')),
   ].join('');
-  return `<section class="rail-panel"><h3>MISSABLE WATCH · 2 MISSABLE · 5 AT RISK</h3><ul class="watch-list">${items}</ul></section>`;
+  return `<section class="rail-panel"><h3>MISSABLE WATCH · ${missables.length} MISSABLE · ${watch.length} AT RISK</h3><ul class="watch-list">${items}</ul></section>`;
 }
 
 // The side rail on the checklist view: SOURCES first so the per-source
@@ -462,7 +505,7 @@ export function renderMissables(el, trophies, state) {
   const queue = planNextUp(trophies, state.save);
   const planItems = queue.slice(0, 12).map((q) => queueItemHtml(q, state, true)).join('');
   el.innerHTML =
-    `<div class="sources-page"><h2>Missables &amp; Next up</h2><p>PowerPyx and GTABase agree there are two missable trophies: Positive Mental Attitude is the possibly missable one, and Maximum Withdrawal is confirmed missable — its Chapter 4 optional mission cannot be replayed. This page lists both, and the stranger chains to start early — then the planner queue.</p></div>` +
+    `<div class="sources-page"><h2>Missables &amp; Next up</h2><p>Only one trophy is possibly missable: Positive Mental Attitude, whose Chapter 1 balcony meditation disappears after Chapter 1. Maximum Withdrawal was once flagged missable here, but eGamers, Mobalytics and GTAScoop all call Positive Mental Attitude the ONLY possibly missable trophy — see the dispute on the Sources page. This page lists the one missable, and the stranger chains to start early — then the planner queue.</p></div>` +
     group('Confirmed missable', 'PowerPyx and GTABase both flag this one. Do it when the guide says, or it may be gone.', confirmed) +
     group('Start early — possible story windows', 'TechWiser reports stranger chains have windows tied to story progress. PowerPyx and GTABase do not confirm it, so this is a watch list, not a confirmed missable list.', watch) +
     `<section class="planner"><h2>Next up planner</h2><p class="stage-progress">Missables first, then the trophies nearest to complete, then story order.</p><ol>${planItems}</ol></section>`;
@@ -471,6 +514,7 @@ export function renderMissables(el, trophies, state) {
 // Sources page: the numbered key with per-source claim counts, the method
 // note, and every dispute shown both ways.
 export function renderSources(el, trophies) {
+  const a = auditStats(trophies);
   const rows = sourceClaimCounts(trophies).map((s) => {
     const label = s.url
       ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">[${s.num}] ${esc(s.name)}</a>`
@@ -483,7 +527,7 @@ export function renderSources(el, trophies) {
     `<p class="our-call"><strong>Our call:</strong> ${esc(d.call)}</p></section>`).join('');
   el.innerHTML =
     `<div class="sources-page"><h2>Sources</h2>` +
-    `<p class="judge-line">A note on method: every specific step in this guide cites its source by number — 190 of 190 claims carry a citation, and all 190 are backed by 2 or more sources. Where no source had confirmed a step at launch, the guide says so plainly.</p>` +
+    `<p class="judge-line">A note on method: every specific step in this guide cites its source by number — ${a.claims} of ${a.claims} claims carry a citation, and all ${a.backed} are backed by 2 or more sources. Where no source had confirmed a step at launch, the guide says so plainly.</p>` +
     `<p>All 55 names, descriptions and grades are the official PlayStation list, cross-checked on Exophase and PSNProfiles (27 visible, 28 hidden). Step-by-step tips come from the PowerPyx and GTABase trophy guides published 18 November 2026, with egamers.io's list as a cross-check. KeenGamer, OutputLag, GTA-Zone and GTA Vibes were read 21 November 2026 — KeenGamer's companion page on all 18 meditation spots too. Five trophies — In The Beginning…, Capital Offense, Bad Luck I Guess, The Truth Is Out There and Ten Pin — have no confirmed trigger at launch, per PowerPyx; their guides are derived from the official description only.</p>` +
     `<p>Using cheats disables trophies and saving, per PowerPyx, GTABase and TechWiser — keep cheats off for a trophy run. There is no mission replay, per PowerPyx and GTABase.</p>` +
     `<h3>Sources for this guide — per-source claim counts</h3><ul>${rows}</ul>` +

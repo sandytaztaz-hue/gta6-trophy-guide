@@ -160,7 +160,7 @@ function bindControls() {
 function bindTheme() {
   const btn = document.getElementById('themeSwitch');
   const saved = localStorage.getItem('leonida-theme');
-  const start = params.get('theme') || saved || 'dusk';
+  const start = params.get('theme') || saved || 'paper';
   document.body.dataset.theme = start === 'paper' ? 'paper' : 'dusk';
   btn.textContent = document.body.dataset.theme === 'dusk' ? 'Paper theme' : 'Vice Dusk theme';
   btn.addEventListener('click', () => {
@@ -203,13 +203,16 @@ function bindKeys() {
 
 // Shot states: cover = checklist + detail pane open; roadmap / missables switch
 // the tab; detail = the same pane stretched full-width for a readable guide shot.
+// A #view hash deep-links a tab, but only when no ?shot= framing is in play —
+// read the hash before falling back to the checklist, or the fallback itself
+// overwrites the hash and the deep link never lands.
 function applyShot() {
+  const hashView = (location.hash || '').slice(1);
   if (shot === 'roadmap') showView('roadmap');
   else if (shot === 'missables') showView('missables');
   else if (shot === 'detail') document.body.classList.add('detail-focus');
+  else if (['checklist', 'roadmap', 'missables', 'sources'].includes(hashView)) showView(hashView);
   else showView('checklist');
-  const hashView = (location.hash || '').slice(1);
-  if (!shot && ['checklist', 'roadmap', 'missables', 'sources'].includes(hashView)) showView(hashView);
 }
 
 async function boot() {
@@ -219,6 +222,13 @@ async function boot() {
   bindKeys();
   applyShot();
   renderAll();
+  // Detail shot: frame the HOW TO EARN IT steps. The disputes box above
+  // them is already shown in full on the cover shot; the detail shot is
+  // the one that proves every step carries its inline source numbers.
+  if (shot === 'detail') {
+    const head = document.querySelector('.detail-pane .steps-head');
+    if (head) window.scrollTo(0, Math.max(0, head.getBoundingClientRect().top + window.scrollY - 340));
+  }
   requestAnimationFrame(() => {
     window.__shotReady = true;
   });

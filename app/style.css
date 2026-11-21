@@ -45,14 +45,14 @@ kbd {
 .masthead {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 18px 22px 12px;
+  padding: 12px 22px 10px;
   border-bottom: 3px solid var(--gold);
   background: var(--paper-surface);
 }
-.brand h1 { margin: 0; font-size: 30px; letter-spacing: .2px; }
+.brand h1 { margin: 0; font-size: 28px; letter-spacing: .2px; }
 .brand h1::after { content: " ✦"; color: var(--gold); }
 .tagline { margin: 4px 0 0; color: var(--paper-muted); font-size: 14px; max-width: 46ch; }
 
@@ -156,14 +156,14 @@ main { padding: 16px 22px 24px; max-width: 1360px; margin: 0 auto; }
 .trophy-list { list-style: none; margin: 0; padding: 0; }
 .trophy-row {
   display: grid;
-  grid-template-columns: 44px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 40px 1fr auto;
+  gap: 10px;
   align-items: start;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border: 1px solid var(--paper-line);
   border-radius: var(--radius);
   background: var(--paper-surface);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   cursor: pointer;
 }
 .trophy-row.selected { outline: 2px solid var(--gold); outline-offset: -1px; }
@@ -171,7 +171,7 @@ main { padding: 16px 22px 24px; max-width: 1360px; margin: 0 auto; }
 .trophy-row:focus-visible { outline: 2px solid var(--teal); }
 
 .medal {
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: Georgia, serif; font-weight: 700; font-size: 17px;
@@ -216,8 +216,17 @@ main { padding: 16px 22px 24px; max-width: 1360px; margin: 0 auto; }
 .detail-pane .detail-desc { color: var(--paper-muted); margin: 0 0 10px; font-size: 14px; }
 .detail-pane .detail-flags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; font-size: 12px; }
 .detail-pane h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--gold); margin: 14px 0 6px; }
+/* The steps heading: the "HOW TO EARN IT" line, set apart from the guide. */
+.detail-pane h3.steps-head {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 2px solid var(--gold);
+  color: var(--paper-ink);
+}
+.detail-pane h3.steps-head span { color: var(--gold); }
 .detail-pane ol.guide-steps { margin: 0; padding-left: 20px; font-size: 14px; }
-.detail-pane ol.guide-steps li { margin-bottom: 5px; }
+.detail-pane ol.guide-steps li { margin-bottom: 6px; }
+.detail-pane ol.guide-steps li::marker { color: var(--gold); font-weight: 700; }
 .detail-pane .guide-text { font-size: 14px; margin: 0 0 6px; }
 
 /* Inline citation markers: [1] [3] after a claim or a step. */
@@ -349,7 +358,14 @@ main { padding: 16px 22px 24px; max-width: 1360px; margin: 0 auto; }
   .filters input[type="search"] { width: 100%; }
 }
 
-/* Detail-focus shot: the detail pane takes the whole width, list and rail hidden. */
+/* Light-paper polish: crisp ink on white, gold rules, readable muted text. */
+body[data-theme="paper"] .audit-strip { background: #fffdf8; }
+body[data-theme="paper"] .audit-strip strong { color: #8a5f10; }
+body[data-theme="paper"] .tab.active { color: #8a5f10; }
+body[data-theme="paper"] .trophy-row.selected { outline-color: #b97f1e; }
+body[data-theme="paper"] .nextup-strip b { color: #8a5f10; }
+body[data-theme="paper"] .sources-differ { background: #fdf6ec; }
+body[data-theme="paper"] .your-count { background: #eef6f3; }
 body.detail-focus .checklist-wrap { grid-template-columns: 1fr; }
 body.detail-focus .trophy-list { display: none; }
 body.detail-focus .side-rail { display: none; }
