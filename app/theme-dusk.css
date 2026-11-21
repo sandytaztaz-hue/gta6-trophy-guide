@@ -34,3 +34,13 @@ body[data-theme="dusk"] kbd { background: #2c2447; border-color: var(--paper-lin
 body[data-theme="dusk"] .detail-pane h3 { color: var(--gold); }
 body[data-theme="dusk"] .reveal-btn { border-color: var(--danger); color: var(--danger); }
 body[data-theme="dusk"] .nextup-strip b { color: var(--gold); }
+/* r2 additions: citations, the SOURCES DIFFER box, the count line, the rail. */
+body[data-theme="dusk"] .cites { color: var(--teal); }
+body[data-theme="dusk"] .your-count { border-color: var(--teal); background: #171226; }
+body[data-theme="dusk"] .your-count strong { color: var(--teal); }
+body[data-theme="dusk"] .sources-differ { border-color: var(--danger); background: #241428; }
+body[data-theme="dusk"] .sources-differ > h3 { color: var(--danger); }
+body[data-theme="dusk"] .rail-panel h3 { color: var(--gold); }
+body[data-theme="dusk"] .badge { border-color: var(--danger); color: var(--danger); }
+body[data-theme="dusk"] .badge.risk { border-color: var(--gold); color: var(--gold); }
+body[data-theme="dusk"] .dispute h3 { color: var(--paper-ink); }

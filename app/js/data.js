@@ -1,4 +1,5 @@
-// Leonida Trophy Codex — data.js loads the trophy list and answers lookups.
+// Leonida Trophy Codex — data.js: loads trophies.json once and answers lookups.
+// Every other module reads the trophy list through here, never by fetching twice.
 let doc = null;
 
 export async function loadTrophies() {
@@ -9,37 +10,41 @@ export async function loadTrophies() {
   return doc;
 }
 
-export function trophyList() {
+function list() {
   if (!doc) throw new Error('loadTrophies() first');
   return doc.trophies;
 }
 
+export function trophyList() {
+  return list();
+}
+
 export function trophyById(id) {
-  return trophyList().find((t) => t.id === id) || null;
+  return list().find((t) => t.id === id) || null;
 }
 
 export function hiddenTrophies() {
-  return trophyList().filter((t) => t.hidden);
+  return list().filter((t) => t.hidden);
 }
 
 export function missableTrophies() {
-  return trophyList().filter((t) => t.missable);
+  return list().filter((t) => t.missable);
 }
 
 export function watchTrophies() {
-  return trophyList().filter((t) => t.watch);
+  return list().filter((t) => t.watch);
 }
 
 export function countedTrophies() {
-  return trophyList().filter((t) => t.count != null);
+  return list().filter((t) => t.count != null);
 }
 
 export function trophiesByKind(kind) {
-  if (kind === 'missable') return trophyList().filter((t) => t.missable || t.watch);
-  return trophyList().filter((t) => t.kind === kind);
+  if (kind === 'missable') return list().filter((t) => t.missable || t.watch);
+  return list().filter((t) => t.kind === kind);
 }
 
-// The master source list lives in trophies.json so no URL literal sits in code.
+// The source list lives in trophies.json, so no URL literal sits in the code.
 export function sourceList() {
   if (!doc) throw new Error('loadTrophies() first');
   return doc.sources || [];

@@ -1,9 +1,9 @@
 // Leonida Trophy Codex — hand-in program (Node 22, standard library only).
-// The guide itself is the static app/ folder: index.html plus ES modules, CSS and
-// the trophy data, all offline. This program copies app/ and screenshots/ from
-// beside this file into the hand-in folder and writes dossier.json there with the
-// vendored make.fun library. Leave vendor/makefun-frontend.ts untouched: the
-// scorer rebuilds the dossier with its own copy and compares byte for byte.
+// The guide itself is the static app/ folder: index.html plus ES modules, CSS
+// and the trophy data, all offline. This program copies app/ and screenshots/
+// into the hand-in folder and writes dossier.json there with the vendored
+// make.fun library. Leave vendor/makefun-frontend.ts untouched: the scorer
+// rebuilds the dossier with its own copy and compares byte for byte.
 //
 // Run it outside the grader with MAKEFUN_OUTPUT_DIR standing in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts

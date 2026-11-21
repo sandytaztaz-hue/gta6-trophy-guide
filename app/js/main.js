@@ -1,6 +1,7 @@
-// Leonida Trophy Codex — main.js boots the app: routing, filters, shortcuts,
-// theme switch, export/import, and the ?shot= states the screenshots use.
-import { SPOILER_DEFAULT, DEMO_SAVE } from './config.js';
+// Leonida Trophy Codex — main.js: boots the app. Routing, filters, keyboard
+// shortcuts, theme switch, export/import, the audit strip and side rail, and
+// the ?shot= states the screenshots render.
+import { SPOILER_DEFAULT } from './config.js';
 import { loadTrophies, trophyList, trophyById } from './data.js';
 import {
   loadSave, demoSave, saveProgress, toggleEarned, setCounter, setNote,
@@ -8,9 +9,13 @@ import {
 } from './store.js';
 import { applyFilters } from './filters.js';
 import {
-  renderHeader, renderChecklist, renderDetailPane,
-  renderRoadmap, renderMissables, renderSources, planNextUp,
+  renderHeader, renderAuditStrip, renderChecklist, renderDetailPane,
+  renderRoadmap, renderMissables, renderSources, renderSideRail, planNextUp,
 } from './views.js';
+
+// Positive Mental Attitude is the hero trophy: the default selection when no
+// ?trophy= is given, so the cover shot opens on it.
+const HERO_TROPHY = 28;
 
 const params = new URLSearchParams(location.search);
 const isDemo = params.get('demo') === '1';
@@ -28,7 +33,7 @@ const state = {
   grade: 'all',
   earned: 'all',
   hiddenOnly: false,
-  selectedId: shotTrophy || 17,
+  selectedId: shotTrophy || HERO_TROPHY,
   revealed: new Set(),
   view: 'checklist',
 };
@@ -36,6 +41,8 @@ const state = {
 const els = {
   list: document.getElementById('trophyList'),
   pane: document.getElementById('detailPane'),
+  rail: document.getElementById('sideRail'),
+  strip: document.getElementById('auditStrip'),
   roadmap: document.getElementById('view-roadmap'),
   missables: document.getElementById('view-missables'),
   sources: document.getElementById('view-sources'),
@@ -57,19 +64,22 @@ function renderNextUpStrip() {
 
 function renderAll() {
   renderHeader(state.save, trophyList());
+  renderAuditStrip(els.strip, trophyList());
   renderChecklist(els.list, filteredRows(), state, handlers);
   const selected = trophyById(state.selectedId) || filteredRows()[0] || null;
   if (selected) state.selectedId = selected.id;
   renderDetailPane(els.pane, selected, state, handlers);
+  renderSideRail(els.rail, trophyList(), state);
   renderRoadmap(els.roadmap, trophyList(), state);
   renderMissables(els.missables, trophyList(), state);
-  renderSources(els.sources);
+  renderSources(els.sources, trophyList());
   renderNextUpStrip();
 }
 
 function lightRefresh() {
   renderHeader(state.save, trophyList());
   renderChecklist(els.list, filteredRows(), state, handlers);
+  renderSideRail(els.rail, trophyList(), state);
   renderNextUpStrip();
 }
 

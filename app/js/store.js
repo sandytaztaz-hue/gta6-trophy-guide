@@ -1,21 +1,25 @@
-// Leonida Trophy Codex — store.js keeps progress in the browser: earned ticks,
-// PSN progress counters, per-trophy notes, export/import, copy-to-clipboard.
+// Leonida Trophy Codex — store.js: progress in the browser. Earned ticks, PSN
+// progress counters and per-trophy notes live in localStorage; the demo save
+// (?demo=1) lives in memory only and never overwrites the player's own save.
 import { SAVE_KEY, DEMO_SAVE } from './config.js';
 
 function blankSave() {
   return { earned: [], counters: {}, notes: {} };
 }
 
+function cleanSave(parsed) {
+  return {
+    earned: Array.isArray(parsed.earned) ? parsed.earned : [],
+    counters: parsed.counters && typeof parsed.counters === 'object' ? parsed.counters : {},
+    notes: parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
+  };
+}
+
 export function loadSave() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return blankSave();
-    const parsed = JSON.parse(raw);
-    return {
-      earned: Array.isArray(parsed.earned) ? parsed.earned : [],
-      counters: parsed.counters && typeof parsed.counters === 'object' ? parsed.counters : {},
-      notes: parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
-    };
+    return cleanSave(JSON.parse(raw));
   } catch {
     return blankSave();
   }
@@ -25,7 +29,6 @@ export function saveProgress(save) {
   localStorage.setItem(SAVE_KEY, JSON.stringify(save));
 }
 
-// The demo save (?demo=1) lives in memory only — it never overwrites the player's own save.
 export function demoSave() {
   return {
     earned: [...DEMO_SAVE.earned],
@@ -46,6 +49,8 @@ export function toggleEarned(save, id) {
   return save;
 }
 
+// The counter a trophy shows: full when earned, the saved value otherwise,
+// clamped into 0..count.
 export function counterValue(save, trophy) {
   if (trophy.count == null) return null;
   if (isEarned(save, trophy.id)) return trophy.count;
@@ -100,11 +105,8 @@ export async function copyProgressToClipboard(save) {
 export function importProgressText(text) {
   const parsed = JSON.parse(text);
   if (!parsed || typeof parsed !== 'object') throw new Error('not a progress file');
-  const save = {
-    earned: Array.isArray(parsed.earned) ? parsed.earned.filter((n) => Number.isInteger(n)) : [],
-    counters: parsed.counters && typeof parsed.counters === 'object' ? parsed.counters : {},
-    notes: parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
-  };
+  const save = cleanSave(parsed);
+  save.earned = save.earned.filter((n) => Number.isInteger(n));
   saveProgress(save);
   return save;
 }
